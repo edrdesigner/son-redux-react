@@ -1,24 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore } from 'redux';
-import AppReducer from './AppReducer';
+import cfgStore from './store';
+import { Provider } from 'react-redux'
+import App from './containers/App';
 
-const store = createStore(AppReducer)
+const store = cfgStore()
 
-const fnRender = () => {  
-    ReactDOM.render(
-        <App
-            msg={ store.getState() }
-            sayHello= { () => store.dispatch({type: 'SAY_HELLO'})} >
-        </App>, 
-        document.getElementById('root')
-)}
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+)
 
-fnRender()
-
-store.subscribe(fnRender)
-
-registerServiceWorker();
+registerServiceWorker()
